@@ -51,8 +51,12 @@ public function index(){
             public function destroy(int $id)
             {
                 // dd($id);
+                //Disryモデルをモデルを使用して、IDが一致する日記の取得
                 $diary = Diary::find($id);
+                //取得した日記の削除
                 $diary->delete();
+                //一覧画面にリダイレクト
                 return redirect()->route('diary.index');
             }
+
 }
