@@ -46,6 +46,13 @@ public function index(){
 
             //一覧ページにリダイレクト
             return redirect()->route('diary.index');
-    
     }
+            //日記を削除するためのメソッド
+            public function destroy(int $id)
+            {
+                // dd($id);
+                $diary = Diary::find($id);
+                $diary->delete();
+                return redirect()->route('diary.index');
+            }
 }
