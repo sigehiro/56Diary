@@ -76,7 +76,7 @@ public function index(){
             //日記を更新し、一覧画面にリダイレクトする
             //-$id : 編集対象の日記ID
             //-$request:リクエストの内容。ここに画面で入力された文字が格納されている。基本的にはstoreと同じ
-            public function update(int $id, Request $request)
+            public function update(int $id, CreateDiary $request)
             {
                 // dd($request->title);
                 $diary= Diary::find($id);
