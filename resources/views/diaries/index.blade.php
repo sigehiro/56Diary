@@ -1,32 +1,23 @@
+<!-- layout.blade.phpを読み込む -->
 @extends('layout')
-@section('title', '新規投稿')
+@section('title', '一覧')
 @section('content')
-    <section class="container m-5">
-        <div class="row justify-content-center">
-            <div class="col-8">
-              @if($errors->any())
-                <ul>
-                  @foreach($errors->all() as $message)
-                    <li class="alert alert-danger">{{$message}}</li>
-                  @endforeach
-                </ul>
-              @endif
-              <form action="{{ route('diary.store') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                  <label for="title">タイトル</label>
-                  <input type="text" class="form-control" id="title" name="title" 
-                    value="{{ old('title') }}">
-                </div>
-                <div class="form-group">
-                  <label for="body">本文</label>
-                  <textarea id="body" class="form-control" name="body">{{ old('body') }}</textarea>
-                </div>
-                <div class="text-right">
-                  <button type="submit" class="btn btn-primary">投稿</button>
-                </div>
-              </form>
-            </div>
-        </div>
-    </section>
+  <a href="{{ route('diary.create') }}" class="btn btn-primary btn-block">
+    新規投稿
+  </a>
+  @foreach ($diaries as $diary)
+    <div class="m-4 p-4 border border-primary">
+      <p>{{$diary->title}}</p>
+      <p>{{$diary->body}}</p>
+      <p>{{$diary->created_at}}</p>
+
+    <a href="{{ route('diary.edit', ['id'=>$diary->id])}}" class="btn btn-success">編集</a>
+    
+      <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
+        @csrf
+        @method('delete')
+        <button class="btn btn-danger">削除</button>
+      </form>
+    </div>
+  @endforeach
 @endsection

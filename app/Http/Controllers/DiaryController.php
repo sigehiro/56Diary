@@ -53,6 +53,45 @@ public function index(){
                 // dd($id);
                 $diary = Diary::find($id);
                 $diary->delete();
+
+                //一覧画面にリダイレクト
                 return redirect()->route('diary.index');
+            }
+
+            //編集画面を表示する
+            public function edit(int $id)
+            {
+
+                    //受け取ったIDを元に日記を取得
+                    $diary = Diary::find($id);
+                   
+
+                    //編集画面を返す、同時に画面に取得した日記を渡す。
+                return view('diaries.edit',[
+                    //連想配列 キー=>値
+                    'diary' => $diary
+                ]);
+            }
+
+            //日記を更新し、一覧画面にリダイレクトする
+            //-$id : 編集対象の日記ID
+            //-$request:リクエストの内容。ここに画面で入力された文字が格納されている。基本的にはstoreと同じ
+            public function update(int $id, Request $request)
+            {
+                // dd($request->title);
+                $diary= Diary::find($id);
+
+                //取得した日記のタイトル、本文を書き換える。
+                //$diary->カラム名　＝保存したい内容
+                $diary->title = $request->title;
+                $diary->body = $request->body;
+
+
+                //Dbに保存
+                $diary->save();
+                //↑が終わった人→created_at,update_at　が変わっているか
+                return redirect()->route('diary.index');
+
+
             }
 }
