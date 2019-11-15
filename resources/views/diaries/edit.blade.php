@@ -22,7 +22,7 @@
                 <div class="form-group">
                   <label for="title">タイトル</label>
                   <input type="text" class="form-control" id="title" name="title" 
-                value="{{ old('body',$diary->title) }}">
+                value="{{ old('title',$diary->title) }}">
                 </div>
                 <div class="form-group">
                   <label for="body">本文</label>
