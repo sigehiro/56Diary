@@ -8,6 +8,7 @@ use App\Diary;
 //CreateDiaryを愛用する宣言
 use App\Http\Requests\CreateDiary;
 
+use Illuminate\Support\Facades\Auth;
 
 class DiaryController extends Controller
 {
@@ -40,7 +41,8 @@ public function index(){
             //$diary->カラム名(DB)＝ カラムに設定したい値(create.blade.phpのカラム)
             $diary->title = $request-> title;
             $diary->body = $request-> body;
-
+            //Auth::user( = 現在のログインユーザー情報を取得
+            $diary->user_id = Auth::user()->id;
             //DBに保存実行
             $diary->save();
 

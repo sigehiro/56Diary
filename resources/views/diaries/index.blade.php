@@ -1,5 +1,5 @@
 <!-- layout.blade.phpを読み込む -->
-@extends('layout')
+@extends('layouts.app')
 @section('title', '一覧')
 @section('content')
   <a href="{{ route('diary.create') }}" class="btn btn-primary btn-block">

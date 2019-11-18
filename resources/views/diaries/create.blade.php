@@ -1,7 +1,10 @@
-@extends('layout')
-@section('title', '新規投稿')
+
+@extends('layouts.app')
+
+@section('title','新規投稿')
+
 @section('content')
-    <section class="container m-5">
+    <section class="containser m-5">
         <div class="row justify-content-center">
             <div class="col-8">
               @if($errors->any())
