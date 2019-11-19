@@ -1,4 +1,4 @@
-@extends('layouts,app')
+@extends('layouts.app')
 
 @section('little','編集画面')
 

@@ -11,13 +11,17 @@
       <p>{{$diary->body}}</p>
       <p>{{$diary->created_at}}</p>
 
-    <a href="{{ route('diary.edit', ['id'=>$diary->id])}}" class="btn btn-success">編集</a>
-    
-      <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
-        @csrf
-        @method('delete')
-        <button class="btn btn-danger">削除</button>
-      </form>
+        {{-- @if (Auth::check()) ログインしていたらtrue,他はfalseにlaravelが設定してくれている--}}
+        @if (Auth::check() && $diary->user_id ==  Auth::user()->id)
+            <a href="{{ route('diary.edit', ['id'=>$diary->id])}}" class="btn btn-success">編集</a>
+
+            <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
+                  @csrf
+                  @method('delete')
+                  <button class="btn btn-danger">削除</button>
+            </form>
+        @endif
+
     </div>
   @endforeach
 @endsection
