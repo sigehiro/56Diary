@@ -110,4 +110,18 @@ public function index(){
 
 
             }
+                //いいねが押された時の処理
+                public function like()
+                {
+
+                }
+
+
+                //いいね解除が推された時の処理
+                public function dislike()
+                {
+
+                }
+
+
 }
