@@ -70,7 +70,7 @@ $(document).on('click','.js-like',function(){
                     $.ajax({
                     url:'diary/'+ diaryId +'/dislike',
                     type:'POST',
-                    // dataType:'json',
+                    dataType:'json',
                     //CSRF対策の為、tokenを送信する.
                     headers:{
                         'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')

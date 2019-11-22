@@ -47,12 +47,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    // Registerの入力の際に記入漏れがある場合エラーがでる様にしてくれている
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'picture'=>'required|image|mines:jpeg,png,jpg,gif|max:2048'
         ]);
     }
 

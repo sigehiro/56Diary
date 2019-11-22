@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}"enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -38,7 +38,7 @@
                                 @endif
                             </div>
                         </div>
-
+                        {{-- Registerのpasswordの欄が増える４２＝５４までをコピー --}}
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
@@ -60,6 +60,22 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+
+                            {{-- pictureに訂正 --}}
+                        <div class="form-group row">
+                                <label for="picture" class="col-md-4 col-form-label text-md-right">Profile Picture</label>
+                                {{-- input type="今はfileだが色々変えられる" --}}
+                                <div class="col-md-6">
+                                    <input id="picture" type="file" class="form-control{{ $errors->has('picture') ? ' is-invalid' : '' }}" name="picture" required>
+
+                                    @if ($errors->has('picture'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('picture') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
