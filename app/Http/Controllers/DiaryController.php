@@ -8,7 +8,7 @@ use App\Diary;
 //CreateDiaryを愛用する宣言
 use App\Http\Requests\CreateDiary;
 
-
+use Illuminate\Support\Facades\Auth;
 class DiaryController extends Controller
 {
 
@@ -40,7 +40,8 @@ public function index(){
             //$diary->カラム名(DB)＝ カラムに設定したい値(create.blade.phpのカラム)
             $diary->title = $request-> title;
             $diary->body = $request-> body;
-
+            //Auth::user( = 現在のログインユーザー情報を取得
+            $diary->user_id = Auth::user()->id;
             //DBに保存実行
             $diary->save();
 
@@ -53,6 +54,60 @@ public function index(){
                 // dd($id);
                 $diary = Diary::find($id);
                 $diary->delete();
+
+                //一覧画面にリダイレクト
                 return redirect()->route('diary.index');
+            }
+
+            //編集画面を表示する
+            public function edit(Diary $diary)
+            {
+
+                    //ログインユーザーが日記の投稿者かチェックする
+                    if(Auth::user()->id != $diary->user_id){
+                        //投稿者とユーザーが違う場合以下実行される
+                        abort(403);
+                    }
+
+
+
+
+                    //受け取ったIDを元に日記を取得
+                    // $diary = Diary::find($id);
+
+
+                    //編集画面を返す、同時に画面に取得した日記を渡す。
+                return view('diaries.edit',[
+                    //連想配列 キー=>値
+                    'diary' => $diary
+                ]);
+            }
+
+            //日記を更新し、一覧画面にリダイレクトする
+            //-$id : 編集対象の日記ID
+            //-$request:リクエストの内容。ここに画面で入力された文字が格納されている。基本的にはstoreと同じ
+            public function update(int $id, CreateDiary $request)
+            {
+                // dd($request->title);
+                $diary= Diary::find($id);
+
+                //ログインユーザーが日記の投稿者かチェックする
+                if(Auth::user()->id != $diary->user_id){
+                    //投稿者とユーザーが違う場合以下実行される
+                    abort(403);
+                }
+
+                //取得した日記のタイトル、本文を書き換える。
+                //$diary->カラム名　＝保存したい内容
+                $diary->title = $request->title;
+                $diary->body = $request->body;
+
+
+                //Dbに保存
+                $diary->save();
+                //↑が終わった人→created_at,update_at　が変わっているか
+                return redirect()->route('diary.index');
+
+
             }
 }

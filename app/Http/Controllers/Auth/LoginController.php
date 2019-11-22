@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';//RegisterConttrollre.phpと同じ作業
 
     /**
      * Create a new controller instance.
