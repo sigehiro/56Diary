@@ -21,6 +21,21 @@
                   <button class="btn btn-danger">削除</button>
             </form>
         @endif
+        <div class="mt-3 ml-3">
+          @if (Auth::check() && $diary->likes->contains(function($user){
+            return $user->id ===Auth::user()->id;
+          }))
+              {{-- //ログインしている 且つ この日記にいいねをしている場合 --}}
+              <i class="fas fa-heart fa-lg text-danger js-dislike"></i>
+
+          @else
+              <i class="far fa-heart fa-lg text-danger js-like"></i>
+
+          @endif
+
+            <input type="hidden" class="diary-id" value="{{ $diary->id }}">
+            <span class="js-like-num">{{ $diary->likes->count() }}</span>
+        </div>
 
     </div>
   @endforeach

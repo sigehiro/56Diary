@@ -17,7 +17,9 @@ class DiaryController extends Controller
 public function index(){
     //diariesテーブルのデータを全権取得
     //取得した結果を画面で確認
-    $diaries = Diary::all();
+    // $diaries = Diary::all();
+
+    $diaries = Diary::with('likes')->orderBy('id','desc')->get();
     // dd($diaries);
     //dd():var_dump と die が同時に実行される
     //views/diaries/index.blade.phpを表示
@@ -110,4 +112,34 @@ public function index(){
 
 
             }
+                //いいねが押された時の処理
+                public function like(int $id)
+                {
+                    //いいねされた日記の取得
+                    $diary = Diary::find($id);
+
+                    //Diary.php 9~16あたりに書いてあるlikesに紐もずく。attach:多対多のデータを登録するメソッド
+                    $diary->likes()->attach(Auth::user()->id);
+
+                    //通信が成功したことを返す
+                    return response()->json(['success' => 'いいね完了！']);
+
+                }
+
+
+                //いいね解除が推された時の処理
+                public function dislike(int $id)
+                {
+                    //いいね解除された日記の取得
+                    $diary = Diary::find($id);
+
+                    //detach:多対多のデータを解除するメソッド
+                    $diary->likes()->detach(Auth::user()->id);
+
+                    //通信が成功したことを返す
+                    return response()->json(['success' => 'いいね解除完了！']);
+
+                }
+
+
 }
